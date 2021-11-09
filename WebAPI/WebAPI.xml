@@ -17,5 +17,13 @@
             <param name="weatherData"></param>
             <returns></returns>
         </member>
+        <member name="M:WebAPI.Controllers.WeatherForecastController.GetLatest">
+            <summary>
+            Get latest weatherforecast
+            </summary>
+            <returns>
+            Latest weatherforecast
+            </returns>
+        </member>
     </members>
 </doc>

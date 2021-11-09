@@ -33,7 +33,10 @@ namespace WebAPI.Data
 
         public WeatherForecast ReturnLatestWeatherForecast()
         {
-            return _weatherForecastList[^1];
+            if (_weatherForecastList.Count == 0)
+                return null;
+
+            return  _weatherForecastList[^1];
         }
 
         public WeatherForecast ReturnAtIndex(int index)
