@@ -44,5 +44,12 @@ namespace WebAPI.Data
                 return null;
         }
 
+        public List<WeatherForecast> getAllWeatherForecasts()
+        {
+            if (_weatherForecastList.Count == 0)
+                return null;
+            return _weatherForecastList;
+        }
+
     }
 }

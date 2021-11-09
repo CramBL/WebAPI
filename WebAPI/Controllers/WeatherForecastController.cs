@@ -44,6 +44,12 @@ namespace WebAPI.Controllers
             .ToArray();
         }
 
+        [HttpGet("GetAllWeatherForecastList")]
+        public ActionResult<List<WeatherForecast>> GetAllWeatherForecastList()
+        {
+            return _weatherData.getAllWeatherForecasts();
+        }
+
         /// <summary>
         /// Posts weatherforecast data
         /// </summary>
