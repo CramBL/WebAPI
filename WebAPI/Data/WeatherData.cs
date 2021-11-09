@@ -47,5 +47,26 @@ namespace WebAPI.Data
                 return null;
         }
 
+        public List<WeatherForecast> GetWeatherForecastAtDate(DateTime date)
+        {
+            if (date == null)
+                return null;
+
+            List<WeatherForecast> weatherForecastsAtDate = new();
+
+            var shortDate = date.ToShortDateString();
+
+            foreach (var WeatherForecast in _weatherForecastList)
+            {
+                var tempDate = WeatherForecast.Date.ToShortDateString();
+                if (shortDate == tempDate)
+                    weatherForecastsAtDate.Add(WeatherForecast);
+            }
+
+            return weatherForecastsAtDate;
+
+        }
+ 
+
     }
 }
