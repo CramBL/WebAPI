@@ -26,13 +26,13 @@ namespace WebAPI.Controllers
         {
             _logger = logger;
             _weatherData = WeatherData.GetInstance();
-            _weatherData.AddWeatherForecast(new WeatherForecast()
-            {
-                Date = DateTime.Now,
-                Temperature = 69,
-                AirHumidity =1337,
-                AirPressure = 10
-            });
+            //_weatherData.AddWeatherForecast(new WeatherForecast()
+            //{
+            //    Date = DateTime.Now,
+            //    Temperature = 69,
+            //    AirHumidity =1337,
+            //    AirPressure = 10
+            //});
         }
         /// <summary>
         /// get the weather!
