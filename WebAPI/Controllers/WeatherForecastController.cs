@@ -26,6 +26,13 @@ namespace WebAPI.Controllers
         {
             _logger = logger;
             _weatherData = WeatherData.GetInstance();
+            _weatherData.AddWeatherForecast(new WeatherForecast()
+            {
+                Date = DateTime.Now,
+                Temperature = 69,
+                AirHumidity =1337,
+                AirPressure = 10
+            });
         }
         /// <summary>
         /// get the weather!
@@ -66,8 +73,18 @@ namespace WebAPI.Controllers
             });
             return CreatedAtAction("Get", newWeatherForecastIndex,  _weatherData.ReturnLatestWeatherForecast());
         }
-        
 
+        /// <summary>
+        /// Get latest weatherforecast
+        /// </summary>
+        /// <returns>
+        /// Latest weatherforecast
+        /// </returns>
+        [HttpGet("GetLatest")]
+        public ActionResult<WeatherForecast> GetLatest()
+        {
+            return _weatherData.ReturnLatestWeatherForecast();
+        }
 
     }
 }
