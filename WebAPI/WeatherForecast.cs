@@ -4,12 +4,15 @@ namespace WebAPI
 {
     public class WeatherForecast
     {
+        private static WeatherForecast instance = null;
+
         public DateTime Date { get; set; }
 
-        public int TemperatureC { get; set; }
+        public int? Temperature { get; set; } = null;
 
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        public double? AirHumidity { get; set; } = null;
+        public double? AirPressure { get; set; } = null;
 
-        public string Summary { get; set; }
+        public string Summary { get; set; } = null;
     }
 }

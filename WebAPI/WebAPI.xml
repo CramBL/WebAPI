@@ -4,5 +4,18 @@
         <name>WebAPI</name>
     </assembly>
     <members>
+        <member name="M:WebAPI.Controllers.WeatherForecastController.Get">
+            <summary>
+            get the weather!
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebAPI.Controllers.WeatherForecastController.Post(WebAPI.WeatherForecast)">
+            <summary>
+            Posts weatherforecast data
+            </summary>
+            <param name="weatherData"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

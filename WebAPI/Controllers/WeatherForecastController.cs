@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI.Data;
 
 namespace WebAPI.Controllers
 {
@@ -11,6 +12,9 @@ namespace WebAPI.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        private WeatherData _weatherData;
+        
+
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -21,8 +25,12 @@ namespace WebAPI.Controllers
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
+            _weatherData = WeatherData.GetInstance();
         }
-
+        /// <summary>
+        /// get the weather!
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
@@ -30,10 +38,36 @@ namespace WebAPI.Controllers
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
+                Temperature = rng.Next(-20, 55),
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
         }
+
+        /// <summary>
+        /// Posts weatherforecast data
+        /// </summary>
+        /// <param name="weatherData"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult<WeatherForecast> Post(WeatherForecast weatherData)
+        {
+            if (weatherData == null)
+            {
+                return BadRequest();
+            }
+
+            var newWeatherForecastIndex = _weatherData.AddWeatherForecast(new WeatherForecast()
+            {
+                Date = DateTime.Now,
+                Temperature = weatherData.Temperature,
+                AirHumidity = weatherData.AirHumidity,
+                AirPressure = weatherData.AirPressure
+            });
+            return CreatedAtAction("Get", newWeatherForecastIndex,  _weatherData.ReturnLatestWeatherForecast());
+        }
+        
+
+
     }
 }
