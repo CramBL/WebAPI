@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
 
             var newWeatherForecastIndex = _weatherData.AddWeatherForecast(new WeatherForecast()
             {
-                Date = DateTime.Now,
+                Date = weatherData.Date,
                 Temperature = weatherData.Temperature,
                 AirHumidity = weatherData.AirHumidity,
                 AirPressure = weatherData.AirPressure
@@ -91,6 +91,13 @@ namespace WebAPI.Controllers
         {
             return _weatherData.ReturnLatestWeatherForecast();
         }
+
+        [HttpGet("{date}", Name = "GetAtDate")]
+        public ActionResult<List<WeatherForecast>> GetAtDate(DateTime date)
+        {
+            return _weatherData.GetWeatherForecastAtDate(date);
+        }
+
 
     }
 }

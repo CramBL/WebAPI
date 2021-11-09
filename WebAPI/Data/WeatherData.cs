@@ -71,7 +71,6 @@ namespace WebAPI.Data
             }
 
             return weatherForecastsAtDate;
-
         }
  
 
