@@ -50,8 +50,11 @@ namespace WebAPI.Controllers
             })
             .ToArray();
         }
-
-        [HttpGet("GetAllWeatherForecastList")]
+        /// <summary>
+        /// Get All weather forecasts
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("WeatherForecasts")]
         public ActionResult<List<WeatherForecast>> GetAllWeatherForecastList()
         {
             return _weatherData.getAllWeatherForecasts();
@@ -79,7 +82,7 @@ namespace WebAPI.Controllers
             });
             return CreatedAtAction("Get", newWeatherForecastIndex,  _weatherData.ReturnLatestWeatherForecast());
         }
-
+        
         /// <summary>
         /// Get latest weatherforecast
         /// </summary>
