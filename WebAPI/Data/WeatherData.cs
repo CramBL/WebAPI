@@ -56,9 +56,6 @@ namespace WebAPI.Data
 
         public List<WeatherForecast> GetWeatherForecastAtDate(DateTime date)
         {
-            if (date == null)
-                return null;
-
             List<WeatherForecast> weatherForecastsAtDate = new();
 
             var shortDate = date.ToShortDateString();
