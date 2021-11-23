@@ -1,10 +1,15 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using WebAPI.Models;
 
 namespace WebAPI
 {
     public class WeatherForecast
     {
-        private static WeatherForecast instance = null;
+        
+        [Key]
+        public long WeatherForecastId { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -13,6 +18,10 @@ namespace WebAPI
         public double? AirHumidity { get; set; } = null;
         public double? AirPressure { get; set; } = null;
 
-        public string Summary { get; set; } = null;
+
+        [ForeignKey("ObservedLocation")]
+        public long ObservedLocationId { get; set; }
+        public ObservedLocation ObservedLocation { get; set; }
+
     }
 }

@@ -7,6 +7,8 @@ namespace WebAPI.Data
 {
     public class WeatherData
     {
+
+
         private static WeatherData instance = null;
         private List<WeatherForecast> _weatherForecastList = new();
         
