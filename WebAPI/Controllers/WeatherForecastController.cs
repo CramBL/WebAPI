@@ -42,6 +42,12 @@ namespace WebAPI.Controllers
             //    AirPressure = 10
             //});
         }
+
+        public WeatherForecastController(ApplicationDbContext dbContext)
+        {
+            _weatherData = WeatherData.GetInstance();
+            _context = dbContext;
+        }
        
 
         /// <summary>
