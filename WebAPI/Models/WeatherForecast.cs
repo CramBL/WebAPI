@@ -11,6 +11,7 @@ namespace WebAPI
         [Key]
         public long WeatherForecastId { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
         public int? Temperature { get; set; } = null;
