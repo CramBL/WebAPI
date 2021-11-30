@@ -70,7 +70,7 @@ namespace WebAPI.Controllers
         /// <returns>
         /// Latest weatherforecast
         /// </returns>
-        [HttpGet("GetLatest")]
+        [HttpGet("Latest")]
         public async Task<ActionResult<List<WeatherForecast>>> GetLatestAsync()
         {
             var latestForecast = await _context.weatherForecasts
@@ -79,12 +79,10 @@ namespace WebAPI.Controllers
                 .Take(3)
                 .ToListAsync();
 
-           
-
             return latestForecast;
         }
 
-        [HttpGet("{date}", Name = "GetAtDate")]
+        [HttpGet("{date}", Name = "AtDate")]
         public async Task<ActionResult<List<WeatherForecast>>> GetAtDateAsync(DateTime date)
         {
 
@@ -95,7 +93,7 @@ namespace WebAPI.Controllers
 
             return allWeatherAtDate;
         }
-        [HttpGet("{startDate}/{endDate}", Name = "GetAtDateRange")]
+        [HttpGet("{startDate}/{endDate}", Name = "AtDateRange")]
         public async Task<ActionResult<List<WeatherForecast>>> GetAtDateRangeAsync(DateTime startDate, DateTime endDate)
         {
 
