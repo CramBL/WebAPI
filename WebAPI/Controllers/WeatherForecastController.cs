@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
         /// <param name="weatherData"></param>
         /// <returns></returns>
         [HttpPost, Authorize]
-        public ActionResult<WeatherForecast> Post(WeatherForecast weatherData)
+        public async Task<ActionResult<WeatherForecast>> Post(WeatherForecast weatherData)
         {
             if (weatherData == null)
             {
@@ -58,10 +58,12 @@ namespace WebAPI.Controllers
             }
 
             _context.weatherForecasts.Add(weatherData);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
 
-            return Created("Get", weatherData);
+            return CreatedAtAction("GetWeatherForecast",
+                new { id = weatherData.WeatherForecastId },
+                weatherData);
         }
 
         /// <summary>
