@@ -180,9 +180,9 @@ namespace WebAPI.Tests
                     };
 
                 var PostedWeatherForecastAction = WController.Post(wForecast4);
-                var PostedWeatherForecast = PostedWeatherForecastAction.Value;
+                //var PostedWeatherForecast = PostedWeatherForecastAction.Result.Result;
                 
-                Assert.Equal(wForecast4.AirHumidity, PostedWeatherForecast.AirHumidity);
+                Assert.IsType<int>(PostedWeatherForecastAction.Id);
             }
         }
     }
