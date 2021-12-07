@@ -122,6 +122,7 @@ namespace WebAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader()
             );
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseAuthentication();
