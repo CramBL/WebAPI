@@ -1,0 +1,47 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to your favourite Weather App!</h1>
+</div>
+<div class="width">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tr>
+            <td>Date</td>
+            <td id="date"></td>
+        </tr>
+        <tr>
+            <td>Temperature</td>
+            <td id="temperature"></td>
+        </tr>
+        <tr>
+            <td>Air humidity</td>
+            <td id="airHumidity"></td>
+        </tr>
+        <tr>
+            <td>Air pressure</td>
+            <td id="airPressure"></td>
+        </tr>
+        <tr>
+            <td>ObservedLocation</td>
+            <td id="locationName"></td>
+        </tr>
+        <tr>
+            <td>Latitude</td>
+            <td id="latitude"></td>
+        </tr>
+        <tr>
+            <td>Longitude</td>
+            <td id="longitude"></td>
+        </tr>
+    </table>
+</div>
