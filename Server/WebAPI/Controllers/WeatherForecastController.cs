@@ -51,7 +51,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("inc")]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> AllClientsGetNewWeatherForecast()
         {
             await _chatHubContext.Clients.All.ReceiveNewWeatherData(newestWeatherForecast);
 
@@ -73,6 +73,9 @@ namespace WebAPI.Controllers
 
             _context.weatherForecasts.Add(weatherData);
             await _context.SaveChangesAsync();
+
+            newestWeatherForecast = weatherData;
+            await AllClientsGetNewWeatherForecast();
 
 
             return CreatedAtAction("GetWeatherForecast",
