@@ -17,17 +17,13 @@ namespace WebAPI.Controllers
     public class WeatherForecastController : ControllerBase
     {
         private WeatherForecast newestWeatherForecast;
-        private WeatherData _weatherData;
         private readonly IHubContext<ChatHub, IChat> _chatHubContext;
-        private readonly ILogger<WeatherForecastController> _logger;
         private ApplicationDbContext _context;
 
         public WeatherForecastController(
-            ILogger<WeatherForecastController> logger,
             ApplicationDbContext dbContext,
             IHubContext<ChatHub, IChat> chatHubContext)
         {
-            _logger = logger;
             _context = dbContext;
             _chatHubContext = chatHubContext;
 
@@ -40,23 +36,11 @@ namespace WebAPI.Controllers
             //});
         }
 
-        public WeatherForecastController(ApplicationDbContext dbContext)
-        {
-            _weatherData = WeatherData.GetInstance();
-            _context = dbContext;
-        }
-
-        /// <summary>
-        /// Sends new weatherdata to all open connections
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("inc")]
-        public async Task<IActionResult> AllClientsGetNewWeatherForecast()
-        {
-            await _chatHubContext.Clients.All.ReceiveNewWeatherData(newestWeatherForecast);
-
-            return Ok();
-        }
+        //public WeatherForecastController(ApplicationDbContext dbContext)
+        //{
+        //    _weatherData = WeatherData.GetInstance();
+        //    _context = dbContext;
+        //}
 
         /// <summary>
         /// Posts weatherforecast data
@@ -74,8 +58,8 @@ namespace WebAPI.Controllers
             _context.weatherForecasts.Add(weatherData);
             await _context.SaveChangesAsync();
 
-            newestWeatherForecast = weatherData;
-            await AllClientsGetNewWeatherForecast();
+            await _chatHubContext.Clients.All.ReceiveNewWeatherData(weatherData);
+
 
 
             return CreatedAtAction("GetWeatherForecast",

@@ -8,11 +8,15 @@ using WebAPI.Models;
 using Xunit;
 using SQLitePCL;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.SignalR;
+using NSubstitute;
 
 namespace WebAPI.Tests
 {
     public class WeatherForecastControllerTests
     {
+        //private IHubContext<ChatHub, IChat> chatHubContext = new ChatHub();
+        private IHubContext<ChatHub, IChat> _chatHubContext;
         [Fact]
         public void canReturnLatestWeatherForecast()
         {
@@ -56,9 +60,10 @@ namespace WebAPI.Tests
                     );
                 context.SaveChanges();
             }
+            _chatHubContext = Substitute.For<IHubContext<ChatHub, IChat>>();
             using (var context = new ApplicationDbContext(options))
             {
-                var WController = new WeatherForecastController(context);
+                var WController = new WeatherForecastController(context, _chatHubContext);
                 var latest = WController.GetLatestAsync();
                 var weatherForecastList = latest.Result.Value;
                 
@@ -109,9 +114,11 @@ namespace WebAPI.Tests
                     );
                 context.SaveChanges();
             }
+            _chatHubContext = Substitute.For<IHubContext<ChatHub, IChat>>();
+
             using (var context = new ApplicationDbContext(options))
             {
-                var WController = new WeatherForecastController(context);
+                var WController = new WeatherForecastController(context, _chatHubContext);
                 DateTime testDate = new DateTime(2003,03,03);
                 var WeatherForecastsAtDate = WController.GetAtDateAsync(testDate);
                 var weatherForecastListAtDate = WeatherForecastsAtDate.Result.Value;
@@ -164,10 +171,11 @@ namespace WebAPI.Tests
                     );
                 context.SaveChanges();
             }
-            
+            _chatHubContext = Substitute.For<IHubContext<ChatHub, IChat>>();
+
             using (var context = new ApplicationDbContext(options))
             {
-                var WController = new WeatherForecastController(context);
+                var WController = new WeatherForecastController(context, _chatHubContext);
 
                 var wForecast4 = new WeatherForecast{
                         WeatherForecastId = 4,
