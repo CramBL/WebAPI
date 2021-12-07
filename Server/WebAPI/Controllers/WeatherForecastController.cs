@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -16,23 +17,19 @@ namespace WebAPI.Controllers
     public class WeatherForecastController : ControllerBase
     {
         private WeatherData _weatherData;
-
-
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
+        private readonly IHubContext<ChatHub, IChat> _chatHubContext;
         private readonly ILogger<WeatherForecastController> _logger;
-
         private ApplicationDbContext _context;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, ApplicationDbContext dbContext)
+        public WeatherForecastController(
+            ILogger<WeatherForecastController> logger,
+            ApplicationDbContext dbContext,
+            IHubContext<ChatHub, IChat> chatHubContext)
         {
             _logger = logger;
             _weatherData = WeatherData.GetInstance();
             _context = dbContext;
-
+            _chatHubContext = chatHubContext;
 
             //_weatherData.AddWeatherForecast(new WeatherForecast()
             //{
@@ -48,7 +45,18 @@ namespace WebAPI.Controllers
             _weatherData = WeatherData.GetInstance();
             _context = dbContext;
         }
-       
+
+        /// <summary>
+        /// Sends new weatherdata to all open connections
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("inc")]
+        public async Task<IActionResult> Get()
+        {
+            await _chatHubContext.Clients.All.ReceiveMessage("fra Server", "hej");
+
+            return Ok();
+        }
 
         /// <summary>
         /// Posts weatherforecast data
