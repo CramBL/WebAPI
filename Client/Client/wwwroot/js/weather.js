@@ -1,6 +1,9 @@
-﻿const connection = new signalR.HubConnectionBuilder().withUrl("/weatherHub").build();
+﻿const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+connection.start();
 
 connection.on("ReceiveNewWeatherData", function (weatherData) {
+    console.log("Bob is here");
     var Date = weatherData.Date;
     var Temperature = weatherData.Temperature;
     var AirHumidity = weatherData.AirHumidity;
