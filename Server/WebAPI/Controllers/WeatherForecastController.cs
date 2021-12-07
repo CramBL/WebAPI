@@ -16,7 +16,6 @@ namespace WebAPI.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private WeatherForecast newestWeatherForecast;
         private readonly IHubContext<ChatHub, IChat> _chatHubContext;
         private ApplicationDbContext _context;
 
@@ -47,6 +46,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="weatherData"></param>
         /// <returns></returns>
+        
         [HttpPost, Authorize]
         public async Task<ActionResult<WeatherForecast>> Post(WeatherForecast weatherData)
         {
@@ -60,10 +60,7 @@ namespace WebAPI.Controllers
 
             await _chatHubContext.Clients.All.ReceiveNewWeatherData(weatherData);
 
-
-
-            return CreatedAtAction("GetWeatherForecast",
-                new { id = weatherData.WeatherForecastId },
+            return Created("GetWeatherForecast",
                 weatherData);
         }
 
