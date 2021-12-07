@@ -5,13 +5,15 @@ namespace WebAPI
 {
     public interface IChat
     {
-        Task ReceiveMessage(string user, string message);
+        Task ReceiveNewWeatherData(WeatherForecast newWeatherData);
+
+
     }
     public class ChatHub : Hub<IChat>
     {
-        public async Task SendMessage(string user, string message)
+        public async Task SendMessage(WeatherForecast newWeatherData)
         {
-            await Clients.All.ReceiveMessage(user, message);
+            await Clients.All.ReceiveNewWeatherData(newWeatherData);
         }
     }
 }

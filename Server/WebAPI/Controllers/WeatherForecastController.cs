@@ -16,6 +16,7 @@ namespace WebAPI.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        private WeatherForecast newestWeatherForecast;
         private WeatherData _weatherData;
         private readonly IHubContext<ChatHub, IChat> _chatHubContext;
         private readonly ILogger<WeatherForecastController> _logger;
@@ -27,7 +28,6 @@ namespace WebAPI.Controllers
             IHubContext<ChatHub, IChat> chatHubContext)
         {
             _logger = logger;
-            _weatherData = WeatherData.GetInstance();
             _context = dbContext;
             _chatHubContext = chatHubContext;
 
@@ -53,7 +53,7 @@ namespace WebAPI.Controllers
         [HttpGet("inc")]
         public async Task<IActionResult> Get()
         {
-            await _chatHubContext.Clients.All.ReceiveMessage("fra Server", "hej");
+            await _chatHubContext.Clients.All.ReceiveNewWeatherData(newestWeatherForecast);
 
             return Ok();
         }
